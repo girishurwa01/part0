@@ -1,0 +1,31 @@
+@startuml
+participant browser
+participant spa_server
+database notes_db
+
+note right of browser: User goes to https://studies.cs.helsinki.fi/exampleapp/spa
+
+browser->spa_server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+activate spa_server
+
+spa_server->notes_db: Fetch notes data
+activate notes_db
+notes_db-->spa_server: Notes data
+deactivate notes_db
+
+spa_server-->browser: HTML, CSS, JS (SPA resources)
+deactivate spa_server
+
+note right of browser: User interacts with the SPA to add new notes
+
+browser->spa_server: POST New Note Data
+activate spa_server
+
+spa_server->notes_db: Save new note to the database
+activate notes_db
+notes_db-->spa_server: Updated Notes data
+deactivate notes_db
+
+spa_server-->browser: Success response
+deactivate spa_server
+
