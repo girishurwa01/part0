@@ -1,0 +1,27 @@
+@startuml
+participant browser
+participant spa_client
+participant spa_server
+database notes_db
+
+note right of browser: User interacts with the SPA to create a new note
+
+browser->spa_client: User input (new note content)
+activate spa_client
+
+spa_client->spa_client: Validate input
+spa_client->spa_server: POST New Note Data
+activate spa_server
+
+spa_server->notes_db: Save new note to the database
+activate notes_db
+notes_db-->spa_server: Updated Notes data
+deactivate notes_db
+
+spa_server-->spa_client: Success response
+deactivate spa_server
+
+spa_client->browser: Update UI with new note
+deactivate spa_client
+@enduml
+
