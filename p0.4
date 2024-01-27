@@ -1,0 +1,15 @@
+participant browser
+
+participant server
+
+participant user
+
+note left of user: user will write a new note and click save button
+
+browser -> server  : POST https://studies.cs.helsinki.fi/exampleapp/new_note
+activate server
+
+server -->  browser: Success response ( new note added )
+deactivate server
+
+note right of browser: Browser updates the DOM with the new note
